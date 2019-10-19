@@ -1,0 +1,14 @@
+<h4><a href="/items/<%= @item.id %>"><%= @item.title %></a></h4>
+<br>
+<strong><%= @item.created_at %></strong>
+
+<p>By: <%= @item.user.name %></p>
+
+<% if authorized_to_edit(@item) %>
+<a href="/items/<%= @item.id %>/edit">Edit item</a>
+
+<form class="" action="/items/<%= @item.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" name="" value="Delete this item">
+</form>
+<% end %>

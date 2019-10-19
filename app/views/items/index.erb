@@ -1,0 +1,9 @@
+<h1>All Items</h1>
+
+<% @items.each do |item| %>
+  <h4><a href="/items/<%= item.id %>"><%= item.title %></a></h4>
+
+  <strong><%= item.created_at %></strong>
+
+  <p>Added by: <%= item.user.name %></p>
+<% end %>

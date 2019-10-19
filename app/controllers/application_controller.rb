@@ -7,14 +7,19 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
     enable :sessions
     set :session_secret, "secret_session"
-    #register Sinatra::Flash
+    register Sinatra::Flash
   end
 
   get "/" do
-    erb :welcome
+    if logged_in?
+      redirect "/users/#{current_user.id}"
+    else
+      erb :welcome
+    end
   end
 
-  helpers do 
+
+  helpers do
 
     def logged_in?
       !!current_user
@@ -27,7 +32,7 @@ class ApplicationController < Sinatra::Base
     def authorized_to_edit(item)
       item.user == current_user
     end
-  end 
+
+  end
 
 end
-
