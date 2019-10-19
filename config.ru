@@ -6,4 +6,6 @@ end
 
 
 use UsersController
+use ItemsController
+
 run ApplicationController
