@@ -1,6 +1,7 @@
 <h4><a href="/items/<%= @item.id %>"><%= @item.title %></a></h4>
 <br>
-<strong><%= @item.created_at %></strong>
+<p><%= @item.created_at %></p>
+<p>Notes: <%= @item.notes %></p>
 
 <p>By: <%= @item.user.name %></p>
 

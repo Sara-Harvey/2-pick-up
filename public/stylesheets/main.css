@@ -30,6 +30,11 @@
     width: 85%;
   }
 
+  .truck {
+    <img src="truck.jpg" alt="blue truck in a field" width="500px">
+  }
+
+
   h1 {
     font-size: 36px;
     line-height: 54px;

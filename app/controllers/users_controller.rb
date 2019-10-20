@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       flash[:message] = "Welcome, #{@user.name}"
       redirect "/users/#{@user.id}"
     else
-      flash[:error] = "Login credentials were invlaid. Please try again."
+      flash[:error] = "Login credentials were invalid. Please try again."
       redirect "/login"
     end
   end

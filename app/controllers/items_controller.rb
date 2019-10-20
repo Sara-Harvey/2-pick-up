@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
   end
 
   post "/items" do
-    @item = Item.new(title: params[:title], user_id: current_user.id)
+    @item = Item.new(title: params[:title], notes: params[:notes], user_id: current_user.id)
     if @item.save
       flash[:message] = "Item added!"
       redirect "/items/#{@item.id}"
@@ -42,7 +42,7 @@ class ItemsController < ApplicationController
 
   patch '/items/:id' do
     @item = Item.find(params[:id])
-    @item.update(title: params[:title])
+    @item.update(title: params[:title], notes: params[:notes])
     redirect "/items/#{@item.id}"
   end
 
