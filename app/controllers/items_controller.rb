@@ -2,16 +2,12 @@ class ItemsController < ApplicationController
 
   get "/items" do
     @items = Item.all
-    erb :"items/index"
+    erb :"/items/index"
   end
 
   get "/items/new" do
-    if logged_in?
-      erb :"/items/new"
-    else
-      flash[:error] = "You must be logged in or signed up to create an item."
-      redirect '/'
-    end
+    redirect_if_not_logged_in
+    erb :"/items/new"
   end
 
   post "/items" do
@@ -26,12 +22,16 @@ class ItemsController < ApplicationController
   end
 
   get "/items/:id" do
-    @item = Item.find(params[:id])
+    @item = Item.find_by(id: params[:id])
+      if !@item 
+        flash[:error] = "Item not found."
+        redirect "/"
+      end
     erb :"/items/show"
   end
 
   get '/items/:id/edit' do
-    @item = Item.find(params[:id])
+    @item = Item.find(params[:id])    
     if authorized_to_edit(@item)
       erb :'/items/edit'
     else
@@ -42,14 +42,25 @@ class ItemsController < ApplicationController
 
   patch '/items/:id' do
     @item = Item.find(params[:id])
+    if authorized_to_edit(@item)
     @item.update(title: params[:title], notes: params[:notes])
-    redirect "/items/#{@item.id}"
+      redirect "/items/#{@item.id}"
+    else 
+      flash[:error] = "Not authorized to edit this item."
+      redirect "/items"
+    end
   end
 
-  delete '/items/:id' do
+  delete "/items/:id" do   
     @item = Item.find(params[:id])
+    if authorized_to_edit(@item)  
     @item.destroy
-    redirect '/items'
+      flash[:message] = "Item deleted"
+      redirect "/items"
+    else 
+      flash[:error] = "Not authorized to delete this item."
+      redirect "/items"
+    end
   end
 
 end
